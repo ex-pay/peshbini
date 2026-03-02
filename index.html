@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پێشبینی تۆپی پێ - ڕیزبەندی</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* ڕەنگی پرتەقاڵی بۆ هەموو شتێکی گرنگ */
+        .orange-bg {
+            background-color: #FF6B00;
+        }
+
+        .orange-text {
+            color: #FF6B00;
+        }
+
+        .orange-border {
+            border: 2px solid #FF6B00;
+        }
+
+        .orange-hover:hover {
+            background-color: #FF6B00;
+            color: #000000;
+            transition: all 0.3s ease;
+        }
+
+        /* کانتەینەر */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* هێدەر */
+        header {
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .logo i {
+            font-size: 40px;
+            color: #FF6B00;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            color: #FF6B00;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background-color: #222222;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #FF6B00;
+            color: #000000;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info span {
+            color: #FF6B00;
+        }
+
+        .user-info i {
+            font-size: 24px;
+            color: #FF6B00;
+        }
+
+        /* کارت */
+        .match-card {
+            background-color: #111111;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #333333;
+            transition: transform 0.3s ease;
+        }
+
+        .match-card:hover {
+            transform: translateY(-5px);
+            border-color: #FF6B00;
+            box-shadow: 0 5px 20px rgba(255, 107, 0, 0.3);
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .match-teams {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .match-teams i {
+            color: #FF6B00;
+            margin: 0 10px;
+        }
+
+        .match-time {
+            background-color: #222222;
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #FF6B00;
+        }
+
+        .match-stats {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+            color: #888888;
+        }
+
+        .match-stats i {
+            color: #FF6B00;
+            margin-left: 5px;
+        }
+
+        .btn-predict {
+            background-color: transparent;
+            border: 2px solid #FF6B00;
+            color: #FF6B00;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-predict:hover {
+            background-color: #FF6B00;
+            color: #000000;
+        }
+
+        /* پەڕەی پێشبینی */
+        .predictions-page {
+            background-color: #111111;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #333333;
+        }
+
+        .match-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .match-title h2 {
+            font-size: 32px;
+            color: #FF6B00;
+            margin-bottom: 10px;
+        }
+
+        .match-title p {
+            color: #888888;
+        }
+
+        .predictions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .predictions-table th {
+            background-color: #222222;
+            color: #FF6B00;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .predictions-table td {
+            padding: 15px;
+            border-bottom: 1px solid #333333;
+        }
+
+        .predictions-table tr:hover {
+            background-color: #1a1a1a;
+        }
+
+        .prediction-options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .prediction-options label {
+            cursor: pointer;
+        }
+
+        .prediction-options input[type="radio"] {
+            display: none;
+        }
+
+        .prediction-options .option {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: #222222;
+            color: #ffffff;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .prediction-options input[type="radio"]:checked + .option {
+            background-color: #FF6B00;
+            color: #000000;
+            transform: scale(1.1);
+        }
+
+        .btn-save {
+            background-color: #FF6B00;
+            color: #000000;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save:hover {
+            background-color: #ff8533;
+            transform: scale(1.05);
+        }
+
+        /* ڕیزبەندی */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #111111;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .leaderboard-table th {
+            background-color: #222222;
+            color: #FF6B00;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .leaderboard-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #333333;
+        }
+
+        .rank-1 {
+            background-color: rgba(255, 107, 0, 0.2);
+        }
+
+        .rank-1 td:first-child {
+            color: #FF6B00;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .user-rank {
+            background-color: rgba(255, 107, 0, 0.1);
+            font-weight: bold;
+        }
+
+        /* پرۆفایل */
+        .profile-header {
+            background-color: #111111;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid #333333;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background-color: #222222;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 3px solid #FF6B00;
+        }
+
+        .profile-avatar i {
+            font-size: 60px;
+            color: #FF6B00;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-box {
+            background-color: #222222;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-box .number {
+            font-size: 32px;
+            color: #FF6B00;
+            font-weight: bold;
+        }
+
+        .stat-box .label {
+            color: #888888;
+            margin-top: 5px;
+        }
+
+        /* مۆبایل */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .match-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .predictions-table {
+                font-size: 14px;
+            }
+            
+            .prediction-options .option {
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+
+        /* فووتەر */
+        footer {
+            background-color: #111111;
+            padding: 20px;
+            text-align: center;
+            margin-top: 50px;
+            border-radius: 15px;
+            color: #666666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- هێدەر -->
+        <header>
+            <div class="logo">
+                <i class="fas fa-futbol"></i>
+                <h1>پێشبینی تۆپی پێ</h1>
+            </div>
+            <nav>
+                <div class="nav-links">
+                    <a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> سەرەکی</a>
+                    <a href="#" onclick="showPage('leaderboard')"><i class="fas fa-trophy"></i> ڕیزبەندی</a>
+                    <a href="#" onclick="showPage('profile')"><i class="fas fa-user"></i> پرۆفایلی من</a>
+                    <a href="#" onclick="showPage('results')"><i class="fas fa-chart-line"></i> ئەنجامەکان</a>
+                </div>
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span>BestPredictor</span>
+                </div>
+            </nav>
+        </header>
+
+        <!-- پەڕەی سەرەکی -->
+        <div id="home-page" class="page active">
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="match-teams">
+                        <span>ئارسناڵ</span>
+                        <i class="fas fa-vs"></i>
+                        <span>چێڵسی</span>
+                    </div>
+                    <div class="match-time">
+                        <i class="far fa-clock"></i> ١٧:٣٠
+                    </div>
+                </div>
+                <div class="match-stats">
+                    <span><i class="fas fa-users"></i> ٤٥ بەکارهێنەر</span>
+                    <span><i class="fas fa-check-circle"></i> ١٢ پێشبینی</span>
+                </div>
+                <button class="btn-predict" onclick="showPage('predict-1')">
+                    <i class="fas fa-magic"></i> پێشبینی کردن
+                </button>
+            </div>
+
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="match-teams">
+                        <span>لیڤەرپوول</span>
+                        <i class="fas fa-vs"></i>
+                        <span>مانچستەر سیتی</span>
+                    </div>
+                    <div class="match-time">
+                        <i class="far fa-clock"></i> ٢٠:٠٠
+                    </div>
+                </div>
+                <div class="match-stats">
+                    <span><i class="fas fa-users"></i> ٣٢ بەکارهێنەر</span>
+                    <span><i class="fas fa-check-circle"></i> ٨ پێشبینی</span>
+                </div>
+                <button class="btn-predict" onclick="showPage('predict-2')">
+                    <i class="fas fa-magic"></i> پێشبینی کردن
+                </button>
+            </div>
+
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="match-teams">
+                        <span>ڕیاڵ مەدرید</span>
+                        <i class="fas fa-vs"></i>
+                        <span>بارسێلۆنا</span>
+                    </div>
+                    <div class="match-time">
+                        <i class="far fa-clock"></i> ٢٢:٠٠
+                    </div>
+                </div>
+                <div class="match-stats">
+                    <span><i class="fas fa-users"></i> ٦٧ بەکارهێنەر</span>
+                    <span><i class="fas fa-check-circle"></i> ١٠ پێشبینی</span>
+                </div>
+                <button class="btn-predict" onclick="showPage('predict-3')">
+                    <i class="fas fa-magic"></i> پێشبینی کردن
+                </button>
+            </div>
+        </div>
+
+        <!-- پەڕەی پێشبینی بۆ یاری 1 -->
+        <div id="predict-1-page" class="page">
+            <div class="predictions-page">
+                <div class="match-title">
+                    <h2>ئارسناڵ 🆚 چێڵسی</h2>
+                    <p><i class="far fa-calendar"></i> ۲۰۲٦-۰۳-۰۳ - ١٧:٣٠ | یاریگای ئەمیرەیتس</p>
+                </div>
+
+                <table class="predictions-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>پێشبینی</th>
+                            <th>هەڵبژاردن</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>۱</td>
+                            <td>بردنەوەی تیمی ماڵەوە (۱)</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred1" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred1" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۲</td>
+                            <td>بردنەوەی تیمی میوان (۲)</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred2" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred2" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۳</td>
+                            <td>یەکسان بوون (X)</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred3" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred3" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>٤</td>
+                            <td>بردنەوە یان یەکسان بوونی ماڵەوە (۱X)</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred4" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred4" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>٥</td>
+                            <td>بردنەوە یان یەکسان بوونی میوان (۲X)</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred5" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred5" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>٦</td>
+                            <td>بردنەوەی ماڵ یان میوان (۱۲)</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred6" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred6" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۷</td>
+                            <td>هەردوو تیم گۆل دەکەن (GG)</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred7" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred7" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۸</td>
+                            <td>زیاتر لە ۰.٥ گۆل</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred8" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred8" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۹</td>
+                            <td>زیاتر لە ۱.٥ گۆل</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred9" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred9" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۱۰</td>
+                            <td>زیاتر لە ۲.٥ گۆل</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred10" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred10" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۱۱</td>
+                            <td>زیاتر لە ۳.٥ گۆل</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred11" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred11" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۱۲</td>
+                            <td>زیاتر لە ٤.٥ گۆل</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred12" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred12" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۱۳</td>
+                            <td>زیاتر لە ٥.٥ گۆل</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred13" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred13" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>۱٤</td>
+                            <td>زیاتر لە ٦.٥ گۆل</td>
+                            <td>
+                                <div class="prediction-options">
+                                    <label>
+                                        <input type="radio" name="pred14" value="yes">
+                                        <span class="option">✓</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="pred14" value="no">
+                                        <span class="option">✗</span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="btn-save" onclick="savePredictions()">
+                    <i class="fas fa-save"></i> پاشەکەوت کردنی پێشبینیەکان
+                </button>
+            </div>
+        </div>
+
+        <!-- پەڕەی ڕیزبەندی -->
+        <div id="leaderboard-page" class="page">
+            <h2 class="orange-text" style="margin-bottom: 20px;">
+                <i class="fas fa-trophy"></i> ڕیزبەندی پێشبینیکەران - وەرزی ۲۰۲٦
+            </h2>
+            
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>ڕیزبەندی</th>
+                        <th>ناوی بەکارهێنەر</th>
+                        <th>خاڵ</th>
+                        <th>ڕێژەی سەرکەوتن</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="rank-1">
+                        <td>🏆 ۱</td>
+                        <td>⚽ BestPredictor</td>
+                        <td>۱٥۸</td>
+                        <td>۷۸٪</td>
+                    </tr>
+                    <tr>
+                        <td>۲</td>
+                        <td>🏅 GoalMaster</td>
+                        <td>۱٤٥</td>
+                        <td>۷٥٪</td>
+                    </tr>
+                    <tr>
+                        <td>۳</td>
+                        <td>⭐ FootballKing</td>
+                        <td>۱۳۲</td>
+                        <td>۷۱٪</td>
+                    </tr>
+                    <tr>
+                        <td>٤</td>
+                        <td>🔥 HotTipster</td>
+                        <td>۱۲۸</td>
+                        <td>۷۰٪</td>
+                    </tr>
+                    <tr>
+                        <td>٥</td>
+                        <td>🎯 AccurateShot</td>
+                        <td>۱۲۱</td>
+                        <td>٦۹٪</td>
+                    </tr>
+                    <tr>
+                        <td>٦</td>
+                        <td>🎪 GoalGuru</td>
+                        <td>۱۱٥</td>
+                        <td>٦۷٪</td>
+                    </tr>
+                    <tr>
+                        <td>۷</td>
+                        <td>⚡ SpeedPredictor</td>
+                        <td>۱۰۹</td>
+                        <td>٦٥٪</td>
+                    </tr>
+                    <tr>
+                        <td>۸</td>
+                        <td>🎯 PenaltyKing</td>
+                        <td>۱۰٤</td>
+                        <td>٦۲٪</td>
+                    </tr>
+                    <tr>
+                        <td>۹</td>
+                        <td>🧤 CleanSheet</td>
+                        <td>۹۸</td>
+                        <td>٥۹٪</td>
+                    </tr>
+                    <tr>
+                        <td>۱۰</td>
+                        <td>⚽ HatTrick</td>
+                        <td>۹٤</td>
+                        <td>٥۷٪</td>
+                    </tr>
+                    <tr class="user-rank">
+                        <td>۱٤</td>
+                        <td>👤 BestPredictor (تۆ)</td>
+                        <td>٤٥</td>
+                        <td>٤٥٪</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- پەڕەی پرۆفایل -->
+        <div id="profile-page" class="page">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h2>BestPredictor</h2>
+                <p style="color: #FF6B00;">ئەندام لە: ۲۰۲٦-۰۱-۱۵</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="number">٤٥</div>
+                        <div class="label">کۆی خاڵەکان</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">۱٤</div>
+                        <div class="label">ڕیزبەندی گشتی</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">۳۲</div>
+                        <div class="label">پێشبینی ڕاست</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number">٤٥٪</div>
+                        <div class="label">ڕێژەی سەرکەوتن</div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="orange-text" style="margin: 30px 0 20px;">
+                <i class="fas fa-history"></i> مێژووی پێشبینیەکان
+            </h3>
+
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>یاری</th>
+                        <th>ئەنجام</th>
+                        <th>پێشبینیەکان</th>
+                        <th>خاڵ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ئارسناڵ - چێڵسی</td>
+                        <td>۲-۱</td>
+                        <td>۸ ڕاست / ٦ هەڵە</td>
+                        <td class="orange-text">۱۲</td>
+                    </tr>
+                    <tr>
+                        <td>لیڤەرپوول - مان سیتی</td>
+                        <td>۱-۱</td>
+                        <td>٥ ڕاست / ۹ هەڵە</td>
+                        <td class="orange-text">۷</td>
+                    </tr>
+                    <tr>
+                        <td>ڕیاڵ مەدرید - بارسێلۆنا</td>
+                        <td>۳-۲</td>
+                        <td>۱۰ ڕاست / ٤ هەڵە</td>
+                        <td class="orange-text">۱٥</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- پەڕەی ئەنجامەکان -->
+        <div id="results-page" class="page">
+            <h2 class="orange-text" style="margin-bottom: 20px;">
+                <i class="fas fa-chart-line"></i> ئەنجامەکانی دوێنێ و ئەمڕۆ
+            </h2>
+
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="match-teams">
+                        <span>ئارسناڵ</span>
+                        <i class="fas fa-vs"></i>
+                        <span>چێڵسی</span>
+                    </div>
+                    <div class="match-time" style="background-color: #FF6B00; color: black; font-weight: bold;">
+                        ۲ - ۱
+                    </div>
+                </div>
+                <div style="margin: 15px 0;">
+                    <span style="background-color: #222222; padding: 5px 15px; border-radius: 20px; margin-left: 10px;">
+                        ✅ بردنەوەی ماڵەوە (۱)
+                    </span>
+                    <span style="background-color: #222222; padding: 5px 15px; border-radius: 20px; margin-left: 10px;">
+                        ✅ هەردوو تیم گۆل (GG)
+                    </span>
+                    <span style="background-color: #222222; padding: 5px 15px; border-radius: 20px; margin-left: 10px;">
+                        ✅ زیاتر لە ۲.٥ گۆل
+                    </span>
+                    <span style="background-color: #222222; padding: 5px 15px; border-radius: 20px;">
+                        ❌ زیاتر لە ۳.٥ گۆل
+                    </span>
+                </div>
+                <button class="btn-predict" style="background-color: #222222; color: #FF6B00;">
+                    <i class="fas fa-eye"></i> بینینی پێشبینیەکانی خۆم
+                </button>
+            </div>
+
+            <div class="match-card">
+                <div class="match-header">
+                    <div class="match-teams">
+                        <span>لیڤەرپوول</span>
+                        <i class="fas fa-vs"></i>
+                        <span>مانچستەر سیتی</span>
+                    </div>
+                    <div class="match-time" style="background-color: #FF6B00; color: black; font-weight: bold;">
+                        ۱ - ۱
+                    </div>
+                </div>
+                <div style="margin: 15px 0;">
+                    <span style="background-color: #222222; padding: 5px 15px; border-radius: 20px; margin-left: 10px;">
+                        ✅ یەکسان بوون (X)
+                    </span>
+                    <span style="background-color: #222222; padding: 5px 15px; border-radius: 20px; margin-left: 10px;">
+                        ✅ بردنەوە یان یەکسان (۲X)
+                    </span>
+                    <span style="background-color: #222222; padding: 5px 15px; border-radius: 20px;">
+                        ❌ هەردوو تیم گۆل (GG)
+                    </span>
+                </div>
+                <button class="btn-predict" style="background-color: #222222; color: #FF6B00;">
+                    <i class="fas fa-eye"></i> بینینی پێشبینیەکانی خۆم
+                </button>
+            </div>
+        </div>
+
+        <!-- فووتەر -->
+        <footer>
+            <p>© ۲۰۲٦ - پێشبینی خۆڕایی تۆپی پێ | هەموو مافەکان پارێزراون</p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                <i class="fas fa-heart" style="color: #FF6B00;"></i> 
+                دروست کراوە بۆ خۆشی و ڕاهێنان - نەک گرەو
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // پیشاندانی پەڕەکان
+        function showPage(pageId) {
+            // شاردنەوەی هەموو پەڕەکان
+            var pages = document.getElementsByClassName('page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('active');
+                pages[i].style.display = 'none';
+            }
+            
+            // پیشاندانی پەڕەی دیاری کراو
+            var activePage = document.getElementById(pageId + '-page');
+            if (activePage) {
+                activePage.style.display = 'block';
+                activePage.classList.add('active');
+            }
+        }
+
+        // پاشەکەوت کردنی پێشبینیەکان
+        function savePredictions() {
+            let predictions = [];
+            for (let i = 1; i <= 14; i++) {
+                let radios = document.getElementsByName('pred' + i);
+                for (let radio of radios) {
+                    if (radio.checked) {
+                        predictions.push({
+                            number: i,
+                            value: radio.value
+                        });
+                        break;
+                    }
+                }
+            }
+            
+            if (predictions.length === 14) {
+                alert('✅ پێشبینیەکانت بە سەرکەوتوویی پاشەکەوت کرا!');
+                console.log('پێشبینیەکان:', predictions);
+            } else {
+                alert('⚠️ تکایە هەموو ۱٤ پێشبینیەکە هەڵبژێرە!');
+            }
+        }
+
+        // Load home page by default
+        window.onload = function() {
+            showPage('home');
+        }
+    </script>
+
+    <style>
+        /* شاردنەوەی پەڕەکان لە سەرەتا */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        #home-page {
+            display: block;
+        }
+    </style>
+</body>
+</html>
