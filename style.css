@@ -1,0 +1,100 @@
+/* ناڤیگەیشن */
+.navbar {
+    background-color: var(--white);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+/* لۆگۆ */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: 900;
+    color: #333;
+}
+
+.logo-text span {
+    color: #ff6b00;
+}
+
+/* ناڤیگەیشن مێنو */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    margin: 0 20px;
+}
+
+/* دوگمەکانی چوونەژوورەوە و تۆمارکردن */
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    background-color: #333333;
+    padding: 8px 15px;
+    border-radius: 40px;
+}
+
+.auth-buttons .btn {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+.auth-buttons .btn-outline {
+    border: 2px solid #ff6b00;
+    color: white;
+    background-color: transparent;
+}
+
+.auth-buttons .btn-outline:hover {
+    background-color: #ff6b00;
+    color: white;
+}
+
+.auth-buttons .btn-primary {
+    background-color: #ff6b00;
+    color: white;
+    border: 2px solid #ff6b00;
+}
+
+.auth-buttons .btn-primary:hover {
+    background-color: #ff8533;
+    border-color: #ff8533;
+}
+
+/* Language Selector */
+.language-selector {
+    background-color: #333333;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 5px 20px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-family: 'Vazirmatn', sans-serif;
+    transition: all 0.3s;
+}
+
+.lang-btn.active {
+    background-color: #ff6b00;
+    color: white;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 107, 0, 0.3);
+}
